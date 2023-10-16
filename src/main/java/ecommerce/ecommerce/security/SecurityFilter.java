@@ -32,8 +32,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         
         var token = this.recoveryToken(request);
         if (token != null){
-            var login = token_service.validateToken(token);
-            UserDetails user = usuario_repositorio.findByEmail(login);
+            var email = token_service.validateToken(token);
+            UserDetails user = usuario_repositorio.findByEmail(email);
 
             var authentication = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -47,3 +47,4 @@ public class SecurityFilter extends OncePerRequestFilter {
         return auth_header.replace("Bearer ","");
     }
     
+}
