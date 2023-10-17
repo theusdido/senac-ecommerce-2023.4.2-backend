@@ -24,6 +24,7 @@ public class SecurityConfigurations implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain SecurityFilterChain (HttpSecurity http_security) throws Exception {
+        
         return  http_security                
                 .csrf(csrf -> csrf.disable())                
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
