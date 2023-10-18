@@ -21,9 +21,6 @@ import jakarta.validation.Valid;
 public class AuthController {
 
     @Autowired
-    public UsuarioRepository repositorio;
-
-    @Autowired
     public AuthenticationManager auth_manager;
 
     @Autowired
