@@ -25,27 +25,7 @@ public class UsuarioController {
     
     @Autowired
     UsuarioRepository usuario_repositorio;
-    
-    
-    /*
-    @PostMapping (value = "/usuario/salvar")
-    public ResponseEntity<UsuarioEntity> salvar(@RequestBody UsuarioEntity usuario) {
 
-        AuthController auth = new AuthController();
-        
-        try{
-            String hash = auth.hashSenha(usuario.getSenha());
-            usuario.setSenha(hash);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        UsuarioEntity _user = usuarioRepositorio.save(usuario);
-        return new ResponseEntity<>(_user, HttpStatus.CREATED);
-    }
-    */
-
-    /*
     @PostMapping (value = "/usuario/salvar")
     public ResponseEntity salvar(@RequestBody RegisterDTO data){
         if (this.usuario_repositorio.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
@@ -56,13 +36,7 @@ public class UsuarioController {
         this.usuario_repositorio.save(new_user);
         return new ResponseEntity<>(new_user, HttpStatus.CREATED);
     }    
-    */
 
-    @PostMapping (value = "/usuario/salvar")
-    public String salvar(){
-        return "TESTE";
-    }
-    
     /*
     @GetMapping(value="/usuario/listar")
     public List<UsuarioEntity> getMethodName() {
