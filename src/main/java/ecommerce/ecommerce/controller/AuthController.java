@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,17 +30,23 @@ public class AuthController {
 
     @PostMapping(value="/auth")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+        try{
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
+            var auth    = this.auth_manager.authenticate(usernamePassword);
+            var token   = token_service.generateToken((UsuarioEntity) auth.getPrincipal());
+            return ResponseEntity.ok(new LoginResponseDTO(token));
+        }catch(Exception e){
+            return ResponseEntity.ok().build();
+        }   
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
-        var auth    = this.auth_manager.authenticate(usernamePassword);
-        var token   = token_service.generateToken((UsuarioEntity) auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        
+
     }
     
-    @GetMapping(value="/auth/verifytoken")
-    public boolean verifyToken(@RequestParam String token){
+    @GetMapping(value="/auth/verifytoken/{token}")
+    public ResponseEntity verifyToken(@PathVariable String token){
         String _token = token_service.validateToken(token);
-        return _token == "" ? false : true;
+        return ResponseEntity.ok().body((_token == "" ? false : true));
     }
     
 }

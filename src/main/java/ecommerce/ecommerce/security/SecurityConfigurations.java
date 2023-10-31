@@ -39,7 +39,8 @@ public class SecurityConfigurations implements WebMvcConfigurer {
                 .cors(cors -> this.corsConfigurer())         
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/").permitAll()
                     .requestMatchers(HttpMethod.POST, "/usuario/salvar").permitAll()
                     .anyRequest().authenticated()
