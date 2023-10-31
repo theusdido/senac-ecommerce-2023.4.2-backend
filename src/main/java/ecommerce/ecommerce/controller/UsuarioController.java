@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ecommerce.ecommerce.model.RegisterDTO;
 import ecommerce.ecommerce.model.UsuarioEntity;
 import ecommerce.ecommerce.repository.UsuarioRepository;
+import io.micrometer.core.ipc.http.HttpSender.Response;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -66,4 +67,14 @@ public class UsuarioController {
         usuario_repositorio.save(_user);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping(value="/usuario/pesquisar/{termo}")
+    public ResponseEntity pesquisar(
+        @PathVariable String termo
+    ){
+        List<UsuarioEntity> list = this.usuario_repositorio
+        .findByNomeContaining(termo);
+
+        return ResponseEntity.ok(list);
+    } 
 }

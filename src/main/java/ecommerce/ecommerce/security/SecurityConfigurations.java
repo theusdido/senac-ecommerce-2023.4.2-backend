@@ -42,10 +42,13 @@ public class SecurityConfigurations implements WebMvcConfigurer {
                     .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/").permitAll()
+
+                    // Retirar a permissão da rota do usuário em produção
                     .requestMatchers(HttpMethod.POST, "/usuario/salvar").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/usuario/pesquisar/{termo}").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/usuario/listar").permitAll()
                     .anyRequest().authenticated()
-                    
-                )                                
+                )
                 .addFilterBefore(security_filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
